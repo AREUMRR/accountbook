@@ -1,0 +1,105 @@
+<!--
+파일명 : layouts/main
+작성자 : 정아름
+작성일 : 24.02.21
+수정사항 : 글씨체 적용
+-->
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>AccountBook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- script로 선언된 조각을 이곳에 추가 -->
+    <th:block layout:fragment="script">
+    </th:block>
+    <!-- css로 선언된 조각을 이곳에 추가 -->
+    <th:block layout:fragment="css">
+        <!-- google fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap"
+              rel="stylesheet">
+        <!-- google icon -->
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    </th:block>
+
+    <style>
+        /* google fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Oleo+Script:wght@400;700&display=swap');
+
+        .nav-item {
+            font-family: "Bungee", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .hbody {
+            padding: 20px;
+            margin: auto;
+            background-color: ivory;
+        }
+
+        .hspan {
+            color: black;
+        }
+
+        .hbutton {
+            border: none;
+            background-color: ivory;
+            margin-bottom: -5px;
+        }
+
+        .bungee-regular {
+            font-family: "Bungee", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            padding: 20px;
+            margin: auto;
+            background-color: ivory;
+        }
+
+        .fcontainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            margin: auto;
+            background-color: ivory;
+        }
+
+        .mainFont {
+            font-family: "Nanum Pen Script", cursive;
+            font-weight: 400;
+            font-size: 50px;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/header::header}"></div>
+<div class="main">
+    <div class="mainFont">"Power J가 되자:)"</div>
+</div>
+<div layout:fragment="content"></div>
+<div th:replace="~{fragments/footer::footer}"></div>
+<script th:inline="javascript">
+    <!-- 구글 계산기 -->
+    function popup() {
+        let options = "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=1200, height=800, top=0,left=0";
+        window.open('https://www.google.com/search?q=%EA%B3%84%EC%82%B0%EA%B8%B0&sca_esv=3d5aec0ebbda9031&sxsrf=ACQVn08TSDulso0f6i44nz4kq1w12A_kQg%3A1712624165345&ei=JZIUZvrTFM-K2roPx_C_gAo&udm=&ved=0ahUKEwi6-oiY9rOFAxVPhVYBHUf4D6AQ4dUDCBA&uact=5&oq=%EA%B3%84%EC%82%B0%EA%B8%B0&gs_lp=Egxnd3Mtd2l6LXNlcnAiCeqzhOyCsOq4sDIKEAAYRxjWBBiwAzIKEAAYRxjWBBiwAzIKEAAYRxjWBBiwAzIKEAAYRxjWBBiwAzIKEAAYRxjWBBiwAzIKEAAYRxjWBBiwAzIKEAAYRxjWBBiwAzIKEAAYRxjWBBiwAzIKEAAYRxjWBBiwAzIKEAAYRxjWBBiwA0jZBFAAWABwAXgBkAEAmAEAoAEAqgEAuAEDyAEAmAIBoAIHmAMAiAYBkAYKkgcBMaAHAA&sclient=gws-wiz-serp', '_blank', options)
+    }
+</script>
+</body>
+</html>
