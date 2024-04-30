@@ -12,18 +12,17 @@ import java.util.List;
 public interface AccountBookRepository extends JpaRepository<AccountBookEntity, Long> {
 
     @Query("select w from AccountBookEntity w where w.memberEntity.memberId = :memberId")
-    List<AccountBookEntity> findAllByMemberId(@RequestParam("memberId") Long memberId);
+    List<AccountBookEntity> findAllByMemberId(@RequestParam(value = "memberId") Long memberId);
 
     @Query("select w from AccountBookEntity w where w.accountId = :accountId and w.memberEntity.memberId = :memberId")
-    AccountBookEntity findByAccountIdAndMemberId(@RequestParam("accountId") Long accountId, @RequestParam("memberId") Long memberId);
+    AccountBookEntity findByAccountIdAndMemberId(@RequestParam(value = "accountId") Long accountId, @RequestParam("memberId") Long memberId);
 
     //거래일에서 조회
-    @Query("select w from AccountBookEntity w where w.date like :keyword% order by w.date desc limit 1")
-    List<AccountBookEntity> findByDate(@RequestParam("keyword") String keyword);
+    //@Query("select w from AccountBookEntity w where w.date like %:date% order by w.date desc limit 1")
+    List<AccountBookEntity> findByDate(String date);
 
     //내용에서 조회
-    @Query("select w from AccountBookEntity w where w.content like %:keyword% order by w.date desc limit 1")
-    List<AccountBookEntity> findByContent(@RequestParam("keyword") String keyword);
+    List<AccountBookEntity> findByContentContaining(String keyword);
 
     //수입내역 에서 조회
     @Query("select w from AccountBookEntity w where w.accountRole= :INCOMES order by w.date desc limit 1")

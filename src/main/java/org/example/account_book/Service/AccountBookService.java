@@ -9,6 +9,7 @@ import org.example.account_book.Entity.MemberEntity;
 import org.example.account_book.Repository.AccountBookRepository;
 import org.example.account_book.Repository.MemberRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -66,7 +67,7 @@ public class AccountBookService {
         List<AccountBookEntity> accountBook;
         //내용에서 키워드 가지고 검색
         if (type.equals("c") && keyword != null) {
-            accountBook = accountBookRepository.findByContent(keyword);
+            accountBook = accountBookRepository.findByContentContaining(keyword);
             //수입 내역 조회
         } else if (type.equals("i") && keyword == null) {
             accountBook = accountBookRepository.findByAccountRole_Incomes();
@@ -109,18 +110,25 @@ public class AccountBookService {
     }
 
     //월별조회
-    public List<AccountBookDTO> getMonth(String date, Long memberId) {
+    public List<AccountBookDTO> getMonth(@RequestParam(value = "date") String date,
+                                         Long memberId) {
 
-        //거래일을 조회한다.
-        List<AccountBookEntity> accountBook = accountBookRepository.findByDate(date);
+        //회원의 가계부 조회
+        List<AccountBookEntity> accountBook;
+
+        //거래일 조회
+        if (date != null) {
+            accountBook = accountBookRepository.findByDate(date);
+        } else {
+            accountBook = accountBookRepository.findAll();
+        }
 
         List<AccountBookDTO> accountBookDTO = null;
-        for (AccountBookEntity accountBookEntity : accountBook) {
-            //회원의 가계부 일 때 변환
-            if (accountBookEntity.getMemberEntity().getMemberId().equals(memberId)) {
-                accountBookDTO = Arrays.asList(modelMapper.map(accountBook, AccountBookDTO[].class));
-            }
+        //회원의 가계부 일 때 변환
+        if (accountBook.get(0).getMemberEntity().getMemberId().equals(memberId)) {
+            accountBookDTO = Arrays.asList(modelMapper.map(accountBook, AccountBookDTO[].class));
         }
+
         return accountBookDTO;
     }
 

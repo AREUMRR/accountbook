@@ -96,8 +96,9 @@
                         <form class="d-flex" th:action="@{/account/month}" method="get">
                             <label for="date" class="form-label"></label>
                             <input type="text" class="form-control" name="date" id="date"
-                                   th:value="${date}" placeholder="yyyy-MM">
+                                   th:value="${param.date}" placeholder="yyyy-MM">
                             <button type="submit" class="btn">
+<!--                                    th:onclick="|location.href='@{/account/month(date=${date})}'|">-->
                                 <span class="material-symbols-outlined">
                                     search
                                 </span>
@@ -177,20 +178,18 @@
             <form class="d-flex" th:action="@{/account/list}" method="get">
                 <div class="container input-group mb-3 mt-3">
                     <label for="type" class="form-label"></label>
-                    <select class="form-select-sm" id="type" name="type"
-                            th:value="${type}">
+                    <select class="form-select-sm" id="type" name="type">
                         <option value="" th:selected="${type==null}"></option>
-                        <option value="d" th:selected="${type=='d'}">거래일</option>
                         <option value="c" th:selected="${type=='c'}">내용</option>
                         <option value="i" th:selected="${type=='i'}">수입</option>
                         <option value="e" th:selected="${type=='e'}">지출</option>
                         <option value="cd" th:selected="${type=='cd'}">카드</option>
                         <option value="ch" th:selected="${type=='ch'}">현금</option>
-                        <option value="b" th:selected="${type=='b'}">계좌이체</option>
+                        <option value="b" th:selected="${type=='b'}">은행</option>
                     </select>
                     <label for="keyword" class="form-label"></label>
                     <input type="text" class="form-control" name="keyword"
-                           id="keyword" th:value="${keyword}" readonly>
+                           id="keyword" th:value="${keyword}">
                     <button type="submit" class="btn">
                                 <span class="material-symbols-outlined">
                                     search
@@ -221,67 +220,21 @@
     </script>
 
     <script th:inline="javascript">
+        // 페이지 로드 시 실행되는 함수
+        window.onload = function() {
+            // type 선택 드롭다운 메뉴 변경 시 실행되는 함수
+            document.getElementById('type').addEventListener('change', function() {
+                var typeSelect = document.getElementById('type');
+                var keywordInput = document.getElementById('keyword');
 
-        $(document).ready(function () {
-            $('#type').change(function () {
-                var selectedValue = $(this).val();
-                console.log('type', selectedValue);
-
-                if (selectedValue === "" || selectedValue === "d" || selectedValue === "c") {
-                    // If the selected value is empty, "d", or "c", allow input
-                    $('#keyword').prop('readonly', false);
+                // type이 null이거나 'c'일 때만 keyword 입력 가능하도록 설정
+                if (typeSelect.value === '' || typeSelect.value === 'c') {
+                    keywordInput.disabled = false;
                 } else {
-                    // For any other value, make the input readonly and clear it
-                    $('#keyword').prop('readonly', true).val('');
+                    keywordInput.disabled = true;
                 }
             });
-        });
-
-
-        // $(document).ready(function () {
-        //     $('#type').change(function () {
-        //         var options = $('#type').find('option').map(function () {
-        //             return $(this).val();
-        //         }).get();
-        //         console.log('type', options);
-        //
-        //         // Move the condition checks inside the change event handler
-        //         if ($(options).val() === "") {
-        //             // If the selected value is empty, allow input
-        //             $('#keyword').prop('readonly', false);
-        //         } else if ($(options).val() === "d") {
-        //             // If the selected value is "d", allow input
-        //             $('#keyword').prop('readonly', false);
-        //         } else if ($(options).val() === "c") {
-        //             // If the selected value is "c", allow input
-        //             $('#keyword').prop('readonly', false);
-        //         } else {
-        //             // For any other value, make the input readonly and clear it
-        //             $('#keyword').prop('readonly', true).val('');
-        //         }
-        //     });
-        // });
-
-        // $(document).ready(function () {
-        //
-        //     $('#type').change(function () {
-        //         var options = $('#type').find('option').map(function () {
-        //             return $(this).val();
-        //         }).get();
-        //         console.log('type', options)
-        //     });
-        //
-        //     if ($(this).val("").is(':selected')) {
-        //         $('#keyword').prop('readonly', false);
-        //     } else if ($(this).val("d").is(':selected')) {
-        //         $('#keyword').prop('readonly', false);
-        //     } else if ($(this).val("c").is(':selected')) {
-        //         $('#keyword').prop('readonly', false);
-        //     } else {
-        //         $('#keyword').prop('readonly', true).val('');
-        //     }
-        // });
-
+        };
     </script>
 </th:block>
 </body>

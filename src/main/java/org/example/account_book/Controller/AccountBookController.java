@@ -5,6 +5,7 @@ import org.example.account_book.DTO.AccountBookDTO;
 import org.example.account_book.DTO.MemberDTO;
 import org.example.account_book.Service.AccountBookService;
 import org.example.account_book.Service.MemberService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -150,12 +151,18 @@ public class AccountBookController {
 
     //월별조회
     @GetMapping("/account/month")
-    public String monthList(Model model, String date, Authentication authentication) {
+    public String monthList(Model model,
+                            @RequestParam(value = "date", defaultValue = "") String date,
+                            Authentication authentication) {
 
         //로그인한 회원의 정보를 읽어온다
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
-        List<AccountBookDTO> accountBookDTO = accountBookService.getMonth(date, memberDTO.getMemberId());
+        List<AccountBookDTO> accountBookDTO;
+        if (!date.isEmpty()) {
+
+        }
+        accountBookDTO = accountBookService.getMonth(date, memberDTO.getMemberId());
 
         Long income = accountBookService.income(accountBookDTO);
         Long expense = accountBookService.expense(accountBookDTO);
@@ -168,6 +175,7 @@ public class AccountBookController {
 
         model.addAttribute("date", date);
 
+        System.out.println(date);
         System.out.println(accountBookDTO);
         return "accountbook/month";
     }
