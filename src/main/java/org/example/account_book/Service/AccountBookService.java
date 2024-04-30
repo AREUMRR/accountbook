@@ -111,6 +111,7 @@ public class AccountBookService {
     //월별조회
     public List<AccountBookDTO> getMonth(String date, Long memberId) {
 
+        //거래일을 조회한다.
         List<AccountBookEntity> accountBook = accountBookRepository.findByDate(date);
 
         List<AccountBookDTO> accountBookDTO = null;

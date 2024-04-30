@@ -39,8 +39,8 @@ public class SecurityConfig {
             auth.requestMatchers("/").permitAll();
             auth.requestMatchers("/login").permitAll();
             auth.requestMatchers("/logout").permitAll();
-            auth.requestMatchers("/member/**").permitAll();
-            auth.requestMatchers("/account/**").permitAll();
+            auth.requestMatchers("/member/**").hasAnyRole("USER");
+            auth.requestMatchers("/account/**").hasAnyRole("USER");
             auth.requestMatchers("/css/**", "/js/**", "/image/**").permitAll();
         });
 
