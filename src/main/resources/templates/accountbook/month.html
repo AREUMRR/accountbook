@@ -59,9 +59,8 @@
             padding: 10px;
         }
 
-        .span {
-            text-align: center;
-            font-size: 20px;
+        .month {
+            font-size: 30px;
             font-weight: bolder;
         }
 
@@ -70,11 +69,21 @@
             background-color: white;
         }
 
+        .cardbody {
+            container: flex;
+            padding-top: 50px;
+            color : #fab19a;
+        }
+
     </style>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="row">
+        <div class="month">
+            <span th:text="${month}"/>
+            月
+        </div>
         <!-- 여백 -->
         <div class="col-sm-2"></div>
         <!-- 내용 -->
@@ -84,18 +93,13 @@
                     <form class="d-flex" th:action="@{/account/month}" method="get">
                         <label for="date" class="form-label"></label>
                         <input type="text" class="form-control" name="date" id="date"
-                               th:value="${date}" placeholder="yyyy-MM">
+                               th:value="${param.date}" placeholder="yyyy-MM">
                         <button type="submit" class="btn">
                                 <span class="material-symbols-outlined">
                                     search
                                 </span>
                         </button>
                     </form>
-                </div>
-                <div class="container mt-3 mb-3">
-                    <p>
-                        <span class="span" th:text="${#temporals.format(date, 'yyyy-MM')}"/>
-                    </p>
                 </div>
                 <div class="container mt-3 mb-3" th:each="data:${list}">
                     <div class="card">
@@ -152,14 +156,14 @@
                 <div class="container mt-3 mb-3">
                     <div class="card1">
                         <div class="card-body">수입</div>
-                        <div th:text="${income}">
+                        <div class="cardbody" th:text="${income}">
                         </div>
                     </div>
                 </div>
                 <div class="container mt-3 mb-3">
                     <div class="card2">
                         <div class="card-body">지출</div>
-                        <div th:text="${expense}">
+                        <div class="cardbody" th:text="${expense}">
                         </div>
                     </div>
                 </div>

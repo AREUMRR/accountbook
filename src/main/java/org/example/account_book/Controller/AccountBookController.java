@@ -158,11 +158,7 @@ public class AccountBookController {
         //로그인한 회원의 정보를 읽어온다
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
-        List<AccountBookDTO> accountBookDTO;
-        if (!date.isEmpty()) {
-
-        }
-        accountBookDTO = accountBookService.getMonth(date, memberDTO.getMemberId());
+        List<AccountBookDTO> accountBookDTO = accountBookService.getMonth(date, memberDTO.getMemberId());
 
         Long income = accountBookService.income(accountBookDTO);
         Long expense = accountBookService.expense(accountBookDTO);
@@ -173,7 +169,7 @@ public class AccountBookController {
 
         model.addAttribute("list", accountBookDTO);
 
-        model.addAttribute("date", date);
+        model.addAttribute("month", accountBookDTO.get(0).getDate().substring(5,7));
 
         System.out.println(date);
         System.out.println(accountBookDTO);

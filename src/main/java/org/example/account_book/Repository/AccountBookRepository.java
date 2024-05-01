@@ -18,8 +18,8 @@ public interface AccountBookRepository extends JpaRepository<AccountBookEntity, 
     AccountBookEntity findByAccountIdAndMemberId(@RequestParam(value = "accountId") Long accountId, @RequestParam("memberId") Long memberId);
 
     //거래일에서 조회
-    @Query("select w from AccountBookEntity w where w.date like concat(:date, '%') order by w.date desc limit 1")
-    List<AccountBookEntity> findByDate(@RequestParam(value ="date") String date);
+    //@Query("select w from AccountBookEntity w where w.date = :date order by w.date desc limit 1")
+    List<AccountBookEntity> findByDateContaining(String date);
 
     //내용에서 조회
     List<AccountBookEntity> findByContentContaining(String keyword);

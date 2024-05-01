@@ -109,21 +109,22 @@ public class AccountBookService {
         return accountBookDTO;
     }
 
-    //월별조회
+    //월별 조회
     public List<AccountBookDTO> getMonth(@RequestParam(value = "date") String date,
                                          Long memberId) {
 
-        //회원의 가계부 조회
+        //가계부 조회
         List<AccountBookEntity> accountBook;
 
-        //거래일 조회
+        //거래일(년,월) 기준으로 조회
         if (date != null) {
-            accountBook = accountBookRepository.findByDate(date);
+            accountBook = accountBookRepository.findByDateContaining(date);
         } else {
             accountBook = accountBookRepository.findAll();
         }
 
         List<AccountBookDTO> accountBookDTO = null;
+
         //회원의 가계부 일 때 변환
         if (accountBook.get(0).getMemberEntity().getMemberId().equals(memberId)) {
             accountBookDTO = Arrays.asList(modelMapper.map(accountBook, AccountBookDTO[].class));
