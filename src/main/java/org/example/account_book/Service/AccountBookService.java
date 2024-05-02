@@ -34,7 +34,6 @@ public class AccountBookService {
         accountBookRepository.save(accountBookEntity);
     }
 
-
     //수정
     public void update(AccountBookDTO accountBookDTO, Long memberId) {
         //회원 조회
@@ -45,7 +44,6 @@ public class AccountBookService {
         accountBookRepository.save(accountBookEntity);
 
     }
-
 
     //삭제
     public void delete(Long accountBookId) {
@@ -81,9 +79,9 @@ public class AccountBookService {
         }
 
         //조회한 내역이 없을 경우 예외발생 처리
-        if (accountBook.isEmpty()) {
-            throw new NullPointerException("No account list");
-        }
+//        if (accountBook.isEmpty()) {
+//            throw new NullPointerException("No account list");
+//        }
 
         List<AccountBookDTO> accountBookDTO;
 
@@ -91,12 +89,12 @@ public class AccountBookService {
         if (accountBook.get(0).getMemberEntity().getMemberId().equals(memberId)) {
             accountBookDTO = Arrays.asList(modelMapper.map(accountBook, AccountBookDTO[].class));
         } else {
+            //조회한 내역이 없을 경우 예외발생 처리
             throw new RuntimeException("The member's account book list is empty.");
         }
 
         return accountBookDTO;
     }
-
 
     //개별조회
     public AccountBookDTO findById(Long accountBookId, Long memberId) {
@@ -114,7 +112,6 @@ public class AccountBookService {
     //월별 조회
     public List<AccountBookDTO> getMonth(@RequestParam(value = "date") String date,
                                          Long memberId) {
-
         //가계부 조회
         List<AccountBookEntity> accountBook;
 
@@ -126,9 +123,9 @@ public class AccountBookService {
         }
 
         //조회한 내역이 없을 경우 예외발생 처리
-        if (accountBook.isEmpty()) {
-            throw new NullPointerException("No account list");
-        }
+//        if (accountBook.isEmpty()) {
+//            throw new NullPointerException("No account list");
+//        }
 
         List<AccountBookDTO> accountBookDTO;
 
@@ -136,6 +133,7 @@ public class AccountBookService {
         if (accountBook.get(0).getMemberEntity().getMemberId().equals(memberId)) {
             accountBookDTO = Arrays.asList(modelMapper.map(accountBook, AccountBookDTO[].class));
         } else {
+            //조회한 내역이 없을 경우 예외발생 처리
             throw new RuntimeException("The member's account book list is empty.");
         }
 

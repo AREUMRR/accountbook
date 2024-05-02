@@ -130,18 +130,12 @@ public class AccountBookController {
     @GetMapping("/account/list")
     public String accountBookList(Model model, Authentication authentication,
                                   @RequestParam(value = "type", defaultValue = "") String type,
-                                  @RequestParam(value = "keyword", defaultValue = "") String keyword,
-                                  BindingResult bindingResult) {
+                                  @RequestParam(value = "keyword", defaultValue = "") String keyword) {
 
         //로그인한 회원의 정보를 읽어온다
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
         List<AccountBookDTO> accountBookDTO = accountBookService.getaccountBookList(memberDTO.getMemberId(), type, keyword);
-
-        //오류가 있으면 가계부 목록 페이지로 이동
-        if (bindingResult.hasErrors()) {
-            return "redirect:/accountbook/list";
-        }
 
         //수입 총액
         Long income = accountBookService.income(accountBookDTO);
@@ -172,17 +166,12 @@ public class AccountBookController {
     @GetMapping("/account/month")
     public String monthList(Model model,
                             @RequestParam(value = "date", defaultValue = "") String date,
-                            Authentication authentication, BindingResult bindingResult) {
+                            Authentication authentication) {
 
         //로그인한 회원의 정보를 읽어온다
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
         List<AccountBookDTO> accountBookDTO = accountBookService.getMonth(date, memberDTO.getMemberId());
-
-        //오류가 있으면 가계부 목록 페이지로 이동
-        if (bindingResult.hasErrors()) {
-            return "redirect:/accountbook/list";
-        }
 
         //수입 총액
         Long income = accountBookService.income(accountBookDTO);

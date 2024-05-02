@@ -51,7 +51,7 @@
             <div class="container mt-5 mb-5 p-5 my-5">
                 <!-- 회원 가입 페이지 -->
                 <form th:action="@{/member/save}" method="post" th:object="${data}"
-                      onsubmit="return validateEmail()">
+                      onsubmit="return validateForm()">
                     <div th:replace="~{fragments/error :: formErrorsFragment}"></div>
                     <div class="mb-3 mt-3">
                         <label for="email" class="form-label">이메일 : </label>
@@ -62,11 +62,15 @@
                         <label for="password" class="form-label">비밀번호 : </label>
                         <input type="password" class="form-control" name="password"
                                id="password" th:field="*{password}" required>
+                        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                             class="alert alert-danger"></div>
                     </div>
                     <div class="mb-3">
                         <label for="passwordConfirm" class="form-label">비밀번호 : </label>
                         <input type="password" class="form-control" name="passwordConfirm"
                                id="passwordConfirm" th:field="*{passwordConfirm}" onkeyup>
+                        <div th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"
+                             class="alert alert-danger"></div>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">회원명 : </label>
@@ -95,6 +99,16 @@
 </div>
 <th:block layout:fragment="script">
     <script type="text/javascript">
+        //이메일 유효성 검사 & 비밀번호 일치 여부 검사 수행
+        function validateForm() {
+            if (validateEmail() && validatePassword()) {
+                return true; // 폼 제출
+            } else {
+                return false; // 폼 제출 방지
+            }
+        }
+
+        //이메일 유효성 검사
         function validateEmail() {
             var emailInput = document.getElementById('email');
             var email = emailInput.value;
@@ -107,6 +121,19 @@
                 emailInput.focus();
                 return false;
             }
+        }
+
+        //비밀번호 일치 여부 검사
+        function validatePassword() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("passwordConfirm").value;
+
+            if (password !== confirmPassword) {
+                alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+                return false;
+            }
+
+            return true;
         }
     </script>
 

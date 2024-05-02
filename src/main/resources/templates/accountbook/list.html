@@ -228,14 +228,6 @@
     </script>
 
     <script th:inline="javascript">
-        /* 회원 정보가 맞지 않을 때 메세지 창을 출력 */
-        var error = /*[[ ${error} ]]*/ null;
-        if (error) {
-            alert(error);
-        }
-    </script>
-
-    <script th:inline="javascript">
         // 페이지 로드 시 실행되는 함수
         window.onload = function () {
             // type 선택 드롭다운 메뉴 변경 시 실행되는 함수
