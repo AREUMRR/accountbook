@@ -39,7 +39,7 @@ public class MemberEntity extends BaseEntity {
 
     //회원 비밀번호 확인
     @Column(length = 20, nullable = false)
-    private String password1;
+    private String passwordConfirm;
 
     //회원 전화번호
     @Column(length = 20)

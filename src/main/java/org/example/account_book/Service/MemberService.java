@@ -30,20 +30,19 @@ public class MemberService {
         Optional<MemberEntity> memberEntity = Optional.ofNullable(memberRepository
                 .findByEmail(memberDTO.getEmail()));
 
-        String rawPassword = memberDTO.getPassword();
-        String encodedPassword = passwordEncoder.encode(rawPassword);
-
         //email이 일치하는 회원이 없으면
         if (memberEntity.isEmpty()) {
             //비밀번호를 암호화해서
             MemberEntity member = modelMapper.map(memberDTO, MemberEntity.class);
-            member.setPassword(encodedPassword);
+            member.setPassword(passwordEncoder.
+                    encode(memberDTO.getPassword()));
+            member.setPasswordConfirm(passwordEncoder.
+                    encode(memberDTO.getPasswordConfirm()));
             //저장
             memberRepository.save(member);
         } else {
             throw new IllegalAccessException("이미 가입된 회원입니다.");
         }
-
     }
 
     //수정
@@ -51,10 +50,12 @@ public class MemberService {
         MemberEntity member = modelMapper.map(memberDTO, MemberEntity.class);
 
         //읽어온 값에서 비밀번호가 존재하면
-        if (!memberDTO.getPassword().isEmpty()) {
+        if (!memberDTO.getPassword().isEmpty() && member.getPassword().equals(member.getPasswordConfirm())) {
             //비밀번호 암호화 작업
             member.setPassword(passwordEncoder.
                     encode(memberDTO.getPassword()));
+            member.setPasswordConfirm(passwordEncoder.
+                    encode(memberDTO.getPasswordConfirm()));
         }
         memberRepository.save(member);
 

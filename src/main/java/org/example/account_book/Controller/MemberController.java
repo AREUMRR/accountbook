@@ -43,7 +43,7 @@ public class MemberController {
             return "redirect:/member/save";
         }
 
-        if (!memberDTO.getPassword().equals(memberDTO.getPassword1())) {
+        if (!memberDTO.getPassword().equals(memberDTO.getPasswordConfirm())) {
             bindingResult.rejectValue("password1", "<PASSWORD>",
                     "2개의 비밀번호가 일치하지 않습니다.");
 

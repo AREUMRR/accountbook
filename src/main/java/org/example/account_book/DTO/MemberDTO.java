@@ -39,7 +39,7 @@ public class MemberDTO {
     private String password;
 
     @NotBlank (message = "비밀번호 확인은 필수입니다.")
-    private String password1;
+    private String passwordConfirm;
 
     //회원 전화번호
     private String phone;

@@ -56,32 +56,32 @@
                     <div class="mb-3 mt-3">
                         <label for="email" class="form-label">이메일 : </label>
                         <input type="email" class="form-control" name="email"
-                               id="email" th:field="*{email}">
+                               id="email" th:field="*{email}" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">비밀번호 : </label>
                         <input type="password" class="form-control" name="password"
-                               id="password" th:field="*{password}">
+                               id="password" th:field="*{password}" required>
                     </div>
                     <div class="mb-3">
-                        <label for="password1" class="form-label">비밀번호확인 : </label>
-                        <input type="password" class="form-control" name="password1"
-                               id="password1" th:field="*{password1}">
+                        <label for="passwordConfirm" class="form-label">비밀번호 : </label>
+                        <input type="password" class="form-control" name="passwordConfirm"
+                               id="passwordConfirm" th:field="*{passwordConfirm}" onkeyup>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">회원명 : </label>
                         <input type="text" id="name" class="form-control"
-                               name="name" th:field="*{name}">
+                               name="name" th:field="*{name}" required>
                     </div>
                     <div class="mb-3">
                         <label for="nickName" class="form-label">닉네임 : </label>
                         <input type="text" id="nickName" class="form-control"
-                               name="nickName" th:field="*{nickName}">
+                               name="nickName" th:field="*{nickName}" required>
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">전화번호 : </label>
                         <input type="text" id="phone" class="form-control"
-                               name="phone" th:field="*{phone}">
+                               name="phone" th:field="*{phone}" required>
                     </div>
                     <button type="submit" class="button">
                         submit
@@ -95,26 +95,17 @@
 </div>
 <th:block layout:fragment="script">
     <script type="text/javascript">
-        function emailCheck(memberEmail) {
-            var memberEmail_regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-            // var memberEmail_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$/i;
-            if (!memberEmail_regex.test(memberEmail)) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
         function validateEmail() {
-            var emailInput = document.getElementById('memberEmail');
-            var resultDiv = document.getElementById('result');
-
+            var emailInput = document.getElementById('email');
             var email = emailInput.value;
+            var emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
-            if (emailCheck(email)) {
-                resultDiv.innerHTML = '유효한 이메일 주소입니다.';
+            if (emailRegex.test(email)) {
+                return true;
             } else {
-                resultDiv.innerHTML = '유효하지 않은 이메일 주소입니다.';
+                alert('유효하지 않은 이메일 주소입니다.');
+                emailInput.focus();
+                return false;
             }
         }
     </script>
