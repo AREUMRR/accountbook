@@ -12,7 +12,7 @@ import java.util.List;
 public interface AccountBookRepository extends JpaRepository<AccountBookEntity, Long> {
 
     @Query("select w from AccountBookEntity w where w.memberEntity.memberId = :memberId")
-    List<AccountBookEntity> findAllByMemberId(@RequestParam(value = "memberId") Long memberId);
+    List<AccountBookEntity> findByMemberId(@RequestParam(value = "memberId") Long memberId);
 
     @Query("select w from AccountBookEntity w where w.accountId = :accountId and w.memberEntity.memberId = :memberId")
     AccountBookEntity findByAccountIdAndMemberId(@RequestParam(value = "accountId") Long accountId, @RequestParam("memberId") Long memberId);

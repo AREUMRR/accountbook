@@ -34,7 +34,6 @@ public class AccountBookService {
         accountBookRepository.save(accountBookEntity);
     }
 
-
     //수정
     public void update(AccountBookDTO accountBookDTO, Long memberId) {
         //회원 조회
@@ -45,7 +44,6 @@ public class AccountBookService {
         accountBookRepository.save(accountBookEntity);
 
     }
-
 
     //삭제
     public void delete(Long accountBookId) {
@@ -97,7 +95,6 @@ public class AccountBookService {
         return accountBookDTO;
     }
 
-
     //개별조회
     public AccountBookDTO findById(Long accountBookId, Long memberId) {
         AccountBookEntity accountBook = accountBookRepository.findById(accountBookId).orElseThrow();
@@ -114,7 +111,6 @@ public class AccountBookService {
     //월별 조회
     public List<AccountBookDTO> getMonth(@RequestParam(value = "date") String date,
                                          Long memberId) {
-
         //가계부 조회
         List<AccountBookEntity> accountBook;
 
