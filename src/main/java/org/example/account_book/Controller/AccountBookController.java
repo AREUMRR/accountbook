@@ -5,20 +5,16 @@ import org.example.account_book.DTO.AccountBookDTO;
 import org.example.account_book.DTO.MemberDTO;
 import org.example.account_book.Service.AccountBookService;
 import org.example.account_book.Service.MemberService;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -118,6 +114,9 @@ public class AccountBookController {
         //가계부에 있는 회원 ID와 로그인한 회원의 ID가 일치하면 삭제
         if (accountBookDTO.getMemberId().equals(memberDTO.getMemberId())) {
             accountBookService.delete(id);
+        } else {
+            redirectAttributes.addFlashAttribute("error", "권한이 없습니다.");
+            return "redirect:/account/list";
         }
 
         redirectAttributes.addFlashAttribute("successMessage",
@@ -131,12 +130,18 @@ public class AccountBookController {
     @GetMapping("/account/list")
     public String accountBookList(Model model, Authentication authentication,
                                   @RequestParam(value = "type", defaultValue = "") String type,
-                                  @RequestParam(value = "keyword", defaultValue = "") String keyword) {
+                                  @RequestParam(value = "keyword", defaultValue = "") String keyword,
+                                  BindingResult bindingResult) {
 
         //로그인한 회원의 정보를 읽어온다
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
         List<AccountBookDTO> accountBookDTO = accountBookService.getaccountBookList(memberDTO.getMemberId(), type, keyword);
+
+        //오류가 있으면 가계부 목록 페이지로 이동
+        if (bindingResult.hasErrors()) {
+            return "redirect:/accountbook/list";
+        }
 
         //수입 총액
         Long income = accountBookService.income(accountBookDTO);
@@ -167,12 +172,17 @@ public class AccountBookController {
     @GetMapping("/account/month")
     public String monthList(Model model,
                             @RequestParam(value = "date", defaultValue = "") String date,
-                            Authentication authentication) {
+                            Authentication authentication, BindingResult bindingResult) {
 
         //로그인한 회원의 정보를 읽어온다
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
         List<AccountBookDTO> accountBookDTO = accountBookService.getMonth(date, memberDTO.getMemberId());
+
+        //오류가 있으면 가계부 목록 페이지로 이동
+        if (bindingResult.hasErrors()) {
+            return "redirect:/accountbook/list";
+        }
 
         //수입 총액
         Long income = accountBookService.income(accountBookDTO);

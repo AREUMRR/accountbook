@@ -32,7 +32,8 @@
             font-size: 12px;
             border-left: 7px solid black;
             border-right: 7px solid black;
-
+            margin-bottom: 30px;
+            height: 80px;
         }
 
         .card1 {
@@ -69,6 +70,14 @@
             color: #faa589;
         }
 
+        #datatype {
+            border: 3px solid black;
+        }
+
+        #date {
+            border: 3px solid black;
+        }
+
     </style>
 </head>
 <body>
@@ -82,23 +91,25 @@
         <div class="col-sm-2"></div>
         <!-- 내용 -->
         <div class="col-sm-5">
-            <div class="container mt-5 mb-5 p-5 my-5">
-                <div class="container mt-5 mb-5">
+            <div class="container mt-3 mb-3 p-3 my-3">
+                <div class="container mt-3 mb-5">
                     <form class="d-flex" th:action="@{/account/month}" method="get"
                           onsubmit="return validateDate()">
-                        <label for="datatype" class="form-label"></label>
-                        <select class="form-select-sm" id="datatype" name="datatype" onchange="changePlaceholder()">
-                            <option value="year">year</option>
-                            <option value="month">month</option>
-                        </select>
-                        <label for="date" class="form-label"></label>
-                        <input type="text" class="form-control" name="date" id="date"
-                               th:value="${param.date}" placeholder="yyyy">
-                        <button type="submit" class="btn">
+                        <div class="container input-group mb-3 mt-3">
+                            <label for="datatype" class="form-label"></label>
+                            <select class="form-select-sm" id="datatype" name="datatype" onchange="changePlaceholder()">
+                                <option value="year">year</option>
+                                <option value="month">month</option>
+                            </select>
+                            <label for="date" class="form-label"></label>
+                            <input type="text" class="form-control" name="date" id="date"
+                                   th:value="${param.date}" placeholder="yyyy">
+                            <button type="submit" class="btn">
                                 <span class="material-symbols-outlined">
                                     search
                                 </span>
-                        </button>
+                            </button>
+                        </div>
                     </form>
                 </div>
                 <div class="list container mt-3 mb-3">
@@ -116,20 +127,20 @@
                                     <td th:text="${data.accountId}">
                                         accountId
                                     </td>
+                                    <td th:text="${data.date}">
+                                        date
+                                    </td>
                                     <td th:text="${data.money}">
                                         money
                                     </td>
                                     <td th:text="${data.content}">
                                         content
                                     </td>
-                                    <td th:text="${data.date}">
-                                        date
-                                    </td>
-                                    <td th:text="${data.accountRole}">
-                                        AccountRole
-                                    </td>
-                                    <td th:text="${data.accountType}">
+                                    <td th:text="${data.accountType.name()}">
                                         AccountType
+                                    </td>
+                                    <td th:text="${data.accountRole.name()}">
+                                        AccountRole
                                     </td>
                                     <td>
                                         <button type="button" class="button"
@@ -158,7 +169,7 @@
             </div>
         </div>
         <div class="col-sm-3">
-            <div class="container mt-5 mb-5 p-5 my-5">
+            <div class="container mt-3 mb-3 p-3 my-3">
                 <div class="container mt-3 mb-5">
                     <div class="card1">
                         <div class="card-body">총 자산</div>
@@ -197,7 +208,7 @@
 
     <script th:inline="javascript">
         /* 회원 정보가 맞지 않을 때 메세지 창을 출력 */
-        var error = /*[[ ${successMessage} ]]*/ null;
+        var error = /*[[ ${error} ]]*/ null;
         if (error) {
             alert(error);
         }

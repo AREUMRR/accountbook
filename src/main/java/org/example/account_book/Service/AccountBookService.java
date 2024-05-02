@@ -2,23 +2,16 @@ package org.example.account_book.Service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.account_book.Constant.AccountRole;
 import org.example.account_book.DTO.AccountBookDTO;
 import org.example.account_book.Entity.AccountBookEntity;
 import org.example.account_book.Entity.MemberEntity;
 import org.example.account_book.Repository.AccountBookRepository;
 import org.example.account_book.Repository.MemberRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -87,11 +80,20 @@ public class AccountBookService {
             accountBook = accountBookRepository.findAll();
         }
 
-        List<AccountBookDTO> accountBookDTO = null;
+        //조회한 내역이 없을 경우 예외발생 처리
+        if (accountBook.isEmpty()) {
+            throw new NullPointerException("No account list");
+        }
+
+        List<AccountBookDTO> accountBookDTO;
+
         //회원의 가계부 일 때 변환
         if (accountBook.get(0).getMemberEntity().getMemberId().equals(memberId)) {
             accountBookDTO = Arrays.asList(modelMapper.map(accountBook, AccountBookDTO[].class));
+        } else {
+            throw new RuntimeException("The member's account book list is empty.");
         }
+
         return accountBookDTO;
     }
 
@@ -123,11 +125,18 @@ public class AccountBookService {
             accountBook = accountBookRepository.findAll();
         }
 
-        List<AccountBookDTO> accountBookDTO = null;
+        //조회한 내역이 없을 경우 예외발생 처리
+        if (accountBook.isEmpty()) {
+            throw new NullPointerException("No account list");
+        }
+
+        List<AccountBookDTO> accountBookDTO;
 
         //회원의 가계부 일 때 변환
         if (accountBook.get(0).getMemberEntity().getMemberId().equals(memberId)) {
             accountBookDTO = Arrays.asList(modelMapper.map(accountBook, AccountBookDTO[].class));
+        } else {
+            throw new RuntimeException("The member's account book list is empty.");
         }
 
         return accountBookDTO;

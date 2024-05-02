@@ -50,7 +50,8 @@
         <div class="col-sm-6">
             <div class="container mt-5 mb-5 p-5 my-5">
                 <!-- 회원 가입 페이지 -->
-                <form th:action="@{/member/save}" method="post" th:object="${data}">
+                <form th:action="@{/member/save}" method="post" th:object="${data}"
+                      onsubmit="return validateEmail()">
                     <div th:replace="~{fragments/error :: formErrorsFragment}"></div>
                     <div class="mb-3 mt-3">
                         <label for="email" class="form-label">이메일 : </label>

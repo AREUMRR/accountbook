@@ -39,8 +39,16 @@ public class SecurityConfig {
             auth.requestMatchers("/").permitAll();
             auth.requestMatchers("/login").permitAll();
             auth.requestMatchers("/logout").permitAll();
-            auth.requestMatchers("/member/**").hasAnyRole("USER");
-            auth.requestMatchers("/account/**").hasAnyRole("USER");
+            auth.requestMatchers("/member/detail").hasAnyRole("USER", "ADMIN");
+            auth.requestMatchers("/member/list").hasAnyRole("USER", "ADMIN");
+            auth.requestMatchers("/member/save").permitAll();
+            auth.requestMatchers("/member/update").hasAnyRole("USER", "ADMIN");
+            auth.requestMatchers("/member/mypage").hasAnyRole("USER", "ADMIN");
+            auth.requestMatchers("/account/month").hasAnyRole("USER", "ADMIN");
+            auth.requestMatchers("/account/detail").hasAnyRole("USER", "ADMIN");
+            auth.requestMatchers("/account/list").hasAnyRole("USER", "ADMIN");
+            auth.requestMatchers("/account/save").hasAnyRole("USER", "ADMIN");
+            auth.requestMatchers("/account/update").hasAnyRole("USER", "ADMIN");
             auth.requestMatchers("/css/**", "/js/**", "/image/**").permitAll();
         });
 

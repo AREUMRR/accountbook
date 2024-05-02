@@ -37,7 +37,7 @@ public class MemberService {
         if (memberEntity.isEmpty()) {
             //비밀번호를 암호화해서
             MemberEntity member = modelMapper.map(memberDTO, MemberEntity.class);
-            //member.setPassword(encodedPassword);
+            member.setPassword(encodedPassword);
             //저장
             memberRepository.save(member);
         } else {
