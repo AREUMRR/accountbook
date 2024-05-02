@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -136,12 +138,24 @@ public class AccountBookController {
 
         List<AccountBookDTO> accountBookDTO = accountBookService.getaccountBookList(memberDTO.getMemberId(), type, keyword);
 
+        //수입 총액
         Long income = accountBookService.income(accountBookDTO);
+        //지출 총액
         Long expense = accountBookService.expense(accountBookDTO);
+        //총 자산
+        Long total = income - expense;
+
+        //요소의 개수
+        int length = 0;
+        length += accountBookDTO.size();
+
+        model.addAttribute("length", length);
 
         model.addAttribute("income", income);
 
         model.addAttribute("expense", expense);
+
+        model.addAttribute("total", total);
 
         model.addAttribute("list", accountBookDTO);
 
@@ -160,16 +174,28 @@ public class AccountBookController {
 
         List<AccountBookDTO> accountBookDTO = accountBookService.getMonth(date, memberDTO.getMemberId());
 
+        //수입 총액
         Long income = accountBookService.income(accountBookDTO);
+        //지출 총액
         Long expense = accountBookService.expense(accountBookDTO);
+        //총 자산
+        Long total = income - expense;
+
+        //요소의 개수
+        int length = 0;
+        length += accountBookDTO.size();
+
+        model.addAttribute("length", length);
 
         model.addAttribute("income", income);
 
         model.addAttribute("expense", expense);
 
+        model.addAttribute("total", total);
+
         model.addAttribute("list", accountBookDTO);
 
-        model.addAttribute("month", accountBookDTO.get(0).getDate().substring(5,7));
+        model.addAttribute("month", accountBookDTO.get(0).getDate().substring(5, 7));
 
         System.out.println(date);
         System.out.println(accountBookDTO);

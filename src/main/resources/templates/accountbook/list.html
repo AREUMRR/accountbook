@@ -40,19 +40,7 @@
             font-size: 18px;
             text-align: center;
             width: 200px;
-            height: 200px;
-            border-radius: 15px;
-            border: 3px solid black;
-            margin: 10px;
-            padding: 10px;
-        }
-
-        .card2 {
-            font-weight: bolder;
-            font-size: 18px;
-            text-align: center;
-            width: 200px;
-            height: 200px;
+            height: 170px;
             border-radius: 15px;
             border: 3px solid black;
             margin: 10px;
@@ -80,8 +68,15 @@
         .cardbody {
             container: flex;
             padding-top: 50px;
-            color : #fab19a;
+            color : #faa589;
         }
+
+        .list {
+            text-align: left;
+            font-size: 12px;
+            color : #faa589;
+        }
+
     </style>
 </head>
 <body>
@@ -92,19 +87,28 @@
         <!-- 내용 -->
         <div class="col-sm-5">
             <div class="container mt-5 mb-5 p-5 my-5">
-                <div class="container mt-10 mb-10">
-                    <div>
-                        <form class="d-flex" th:action="@{/account/month}" method="get">
-                            <label for="date" class="form-label"></label>
-                            <input type="text" class="form-control" name="date" id="date"
-                                   th:value="${param.date}" placeholder="yyyy-MM">
-                            <button type="submit" class="btn">
+                <div class="container mt-5 mb-5">
+                    <form class="d-flex" th:action="@{/account/month}" method="get">
+                        <label for="datatype" class="form-label"></label>
+                        <select class="form-select-sm" id="datatype" name="datatype" onchange="changePlaceholder()">
+                            <option value="year">year</option>
+                            <option value="month">month</option>
+                        </select>
+                        <label for="date" class="form-label"></label>
+                        <input type="text" class="form-control" name="date" id="date"
+                               th:value="${param.date}" placeholder="yyyy">
+                        <button type="submit" class="btn">
                                 <span class="material-symbols-outlined">
                                     search
                                 </span>
-                            </button>
-                        </form>
-                    </div>
+                        </button>
+                    </form>
+                </div>
+                <div class="list container mt-3 mb-3">
+                    <span>
+                         전체 내역 :
+                    </span>
+                    <span th:text="${length}"/>
                 </div>
                 <div class="container mt-3" th:each="data:${list}">
                     <div class="card">
@@ -158,15 +162,22 @@
         </div>
         <div class="col-sm-3">
             <div class="container mt-5 mb-5 p-5 my-5">
-                <div class="container mt-3 mb-3">
+                <div class="container mt-3 mb-5">
+                    <div class="card1">
+                        <div class="card-body">총 자산</div>
+                        <div class="cardbody" th:text="${total}">
+                        </div>
+                    </div>
+                </div>
+                <div class="container mt-3 mb-5">
                     <div class="card1">
                         <div class="card-body">수입</div>
                         <div class="cardbody" th:text="${income}">
                         </div>
                     </div>
                 </div>
-                <div class="container mt-3 mb-3">
-                    <div class="card2">
+                <div class="container mt-3 mb-5">
+                    <div class="card1">
                         <div class="card-body">지출</div>
                         <div class="cardbody" th:text="${expense}">
                         </div>
@@ -235,6 +246,41 @@
                 }
             });
         };
+    </script>
+
+    <script th:inline="javascript">
+        function changePlaceholder() {
+            const dateInput = document.getElementById('date');
+            const datatype = document.getElementById('datatype').value;
+
+            if (datatype === 'year') {
+                dateInput.placeholder = 'yyyy';
+            } else {
+                dateInput.placeholder = 'yyyy-MM';
+            }
+        }
+        //데이터 유형에 따라 날짜 값의 유효성을 검사
+        function validateDate() {
+            const dateInput = document.getElementById('date');
+            const datatype = document.getElementById('datatype').value;
+            const dateValue = dateInput.value.trim();
+
+            if (datatype === 'year') {
+                const yearRegex = /^\d{4}$/;
+                if (!yearRegex.test(dateValue)) {
+                    alert('Please enter a valid year in the format "yyyy". Thank you♥');
+                    return false;
+                }
+            } else {
+                const monthRegex = /^\d{4}-\d{2}$/;
+                if (!monthRegex.test(dateValue)) {
+                    alert('Please enter a valid month in the format "yyyy-MM". Thank you♥');
+                    return false;
+                }
+            }
+
+            return true;
+        }
     </script>
 </th:block>
 </body>
