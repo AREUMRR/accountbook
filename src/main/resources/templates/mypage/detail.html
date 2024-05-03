@@ -7,16 +7,25 @@
 <head>
     <meta charset="UTF-8">
     <title>AccountBook</title>
-    <!-- bootstrap -->
+    <!--  bootstrap  -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!--  google icon  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+    <!--  google font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
     <style>
         .row {
-            font-family: Verdana, sans-serif;
+            font-family: "Single Day", cursive;
+            font-weight: 500;
+            font-style: normal;
             font-size: 15px;
             background-color: ivory;
-            font-style: normal;
             padding: 20px;
             margin: auto;
         }
@@ -50,6 +59,17 @@
             opacity: 1
         }
 
+        .p1 {
+            font-weight: bold;
+        }
+
+        .noto-color-emoji-regular {
+            font-family: "Noto Color Emoji", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 20px;
+        }
+
 
     </style>
 </head>
@@ -64,13 +84,15 @@
                 <h3>My Page ♥</h3>
                 <input type="hidden" name="memberId" th:value="${data.memberId}">
                 <p>
-                    <span class="p1" th:text="${data.name}"></span>
+                    <span class="p1" th:text="${data.nickName}"/>
                     님, 반갑습니다.
+                    <span class="noto-color-emoji-regular">😍</span>
                 </p>
                 <hr>
                 <br>
                 <p>
-                    회원 정보 수정하러 가기 ↓↓↓
+                    회원 정보 수정
+                    <span class="noto-color-emoji-regular">️🧐</span>
                 </p>
                 <button type="button" class="button"
                         th:onclick="|location.href='@{/member/update(id=${data.memberId})}'|"
@@ -83,7 +105,8 @@
                 <hr>
                 <br>
                 <p>
-                    회원 탈퇴 ↓↓↓
+                    회원 탈퇴
+                    <span class="noto-color-emoji-regular">😱️</span>
                 </p>
                 <button type="button" class="button"
                         th:onclick="|location.href='@{/member/delete(id=${data.memberId})}'|"
