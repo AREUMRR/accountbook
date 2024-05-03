@@ -45,8 +45,8 @@
             color: white;
             width: 100%;
             padding: 10px 32px;
+            font-size: 20px;
             text-align: center;
-            font-size: 16px;
             margin: 2px 2px;
             opacity: 0.3;
             transition: 0.3s;
@@ -109,7 +109,7 @@
                     <span class="noto-color-emoji-regular">😱️</span>
                 </p>
                 <button type="button" class="button"
-                        th:onclick="|location.href='@{/member/delete(id=${data.memberId})}'|"
+                        th:onclick="|confirmDelete(${data.memberId})|"
                         sec:authorize="hasAnyRole('USER', 'ADMIN')">
                     <span class="spinner-border spinner-border-sm"></span>
                     delete
@@ -120,5 +120,20 @@
         <div class="col-sm-3"></div>
     </div>
 </div>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function confirmDelete(memberId) {
+            // 사용자에게 확인 메시지 표시
+            if (window.confirm("정말 탈퇴하시겠습니까?")) {
+                // 사용자가 확인을 누른 경우
+                // 서버로 삭제 요청 보내기
+                window.location.href = "/member/delete?id=" + memberId;
+            } else {
+                // 사용자가 취소를 누른 경우
+                // 아무 작업도 하지 않음
+            }
+        }
+    </script>
+</th:block>
 </body>
 </html>
