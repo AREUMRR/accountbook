@@ -80,11 +80,6 @@ public class AccountBookService {
             accountBook = accountBookRepository.findAll();
         }
 
-        //조회한 내역이 없을 경우 예외발생 처리
-//        if (accountBook.isEmpty()) {
-//            throw new NullPointerException("No account list");
-//        }
-
         List<AccountBookDTO> accountBookDTO;
 
         //회원의 가계부 일 때 변환
@@ -123,11 +118,6 @@ public class AccountBookService {
         } else {
             accountBook = accountBookRepository.findAll();
         }
-
-        //조회한 내역이 없을 경우 예외발생 처리
-//        if (accountBook.isEmpty()) {
-//            throw new NullPointerException("No account list");
-//        }
 
         List<AccountBookDTO> accountBookDTO;
 
