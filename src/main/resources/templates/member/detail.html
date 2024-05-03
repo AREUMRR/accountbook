@@ -93,7 +93,7 @@
                     update
                 </button>
                 <button type="button" class="button"
-                        th:onclick="|location.href='@{/memebr/delete(id=${data.memberId})}'|"
+                        th:onclick="|confirmDelete(${data.memberId})|"
                         sec:authorize="hasAnyRole('USER', 'ADMIN')">
                     delete
                 </button>
@@ -113,10 +113,17 @@
     </script>
 
     <script th:inline="javascript">
-        /* 회원 정보가 맞지 않을 때 메세지 창을 출력 */
-        var error = /*[[ ${successMessage} ]]*/ null;
-        if (error) {
-            alert(error);
+        //회원 탈퇴 시 더블 체크
+        function confirmDelete(memberId) {
+            // 사용자에게 확인 메시지 표시
+            if (window.confirm("정말 탈퇴하시겠습니까?")) {
+                // 사용자가 확인을 누른 경우
+                // 서버로 삭제 요청 보내기
+                window.location.href = "/member/delete?id=" + memberId;
+            } else {
+                // 사용자가 취소를 누른 경우
+                // 아무 작업도 하지 않음
+            }
         }
     </script>
 </th:block>

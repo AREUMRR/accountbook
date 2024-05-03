@@ -160,7 +160,7 @@
                                     </td>
                                     <td>
                                         <button type="button" class="button"
-                                                th:onclick="|location.href='@{/account/delete(id=${data.accountId})}'|"
+                                                th:onclick="|confirmDelete(${data.accountId})|"
                                                 sec:authorize="hasAnyRole('USER', 'ADMIN')">
                                             <span class="material-symbols-outlined">
                                                 delete
@@ -214,6 +214,7 @@
     </script>
 
     <script th:inline="javascript">
+        //데이터 유형에 따라 placeholder 변경
         function changePlaceholder() {
             const dateInput = document.getElementById('date');
             const datatype = document.getElementById('datatype').value;
@@ -245,6 +246,21 @@
             }
 
             return true;
+        }
+    </script>
+
+    <script th:inline="javascript">
+        //게시글 삭제 시 더블 체크
+        function confirmDelete(accountId) {
+            // 사용자에게 확인 메시지 표시
+            if (window.confirm("게시글을 삭제하시겠습니까?")) {
+                // 사용자가 확인을 누른 경우
+                // 서버로 삭제 요청 보내기
+                window.location.href = "/account/delete?id=" + accountId;
+            } else {
+                // 사용자가 취소를 누른 경우
+                // 아무 작업도 하지 않음
+            }
         }
     </script>
 </th:block>
