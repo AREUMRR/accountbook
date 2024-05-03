@@ -1,5 +1,7 @@
 package org.example.account_book.Repository;
 
+import org.example.account_book.Constant.AccountRole;
+import org.example.account_book.Constant.AccountType;
 import org.example.account_book.Entity.AccountBookEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,24 +26,12 @@ public interface AccountBookRepository extends JpaRepository<AccountBookEntity, 
     //내용에서 조회
     List<AccountBookEntity> findByContentContaining(String keyword);
 
-    //수입내역 에서 조회
-    @Query("select w from AccountBookEntity w where w.accountRole= :INCOMES order by w.date desc limit 1")
-    List<AccountBookEntity> findByAccountRole_Incomes();
-
     //지출내역 에서 조회
-    @Query("select w from AccountBookEntity w where w.accountRole= :EXPENSES order by w.date desc limit 1")
-    List<AccountBookEntity> findByAccountRole_Expenses();
+    //@Query("select w from AccountBookEntity w where w.accountRole= :keyword order by w.date desc limit 1")
+    List<AccountBookEntity> findByAccountRole(AccountRole accountRole);
 
     //은행내역 에서 조회
-    @Query("select w from AccountBookEntity w where w.accountType= :BANK order by w.date desc limit 1")
-    List<AccountBookEntity> findByAccountType_Bank();
-
-    //카드내역 에서 조회
-    @Query("select w from AccountBookEntity w where w.accountType= :CARD order by w.date desc limit 1")
-    List<AccountBookEntity> findByAccountType_Card();
-
-    //현금내역 에서 조회
-    @Query("select w from AccountBookEntity w where w.accountType= :CASH order by w.date desc limit 1")
-    List<AccountBookEntity> findByAccountType_Cash();
+    //@Query("select w from AccountBookEntity w where w.accountType= :keyword order by w.date desc limit 1")
+    List<AccountBookEntity> findByAccountType(AccountType accountType);
 
 }

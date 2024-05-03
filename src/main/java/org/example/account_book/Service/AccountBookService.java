@@ -2,6 +2,8 @@ package org.example.account_book.Service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.example.account_book.Constant.AccountRole;
+import org.example.account_book.Constant.AccountType;
 import org.example.account_book.DTO.AccountBookDTO;
 import org.example.account_book.Entity.AccountBookEntity;
 import org.example.account_book.Entity.MemberEntity;
@@ -60,20 +62,20 @@ public class AccountBookService {
         if (type.equals("c") && keyword != null) {
             accountBook = accountBookRepository.findByContentContaining(keyword);
             //수입 내역 조회
-        } else if (type.equals("i") && keyword == null) {
-            accountBook = accountBookRepository.findByAccountRole_Incomes();
+        } else if (type.equals("i") && keyword.equals("INCOMES")) {
+            accountBook = accountBookRepository.findByAccountRole(AccountRole.valueOf(keyword));
             //지출 내역 조회
-        } else if (type.equals("e") && keyword == null) {
-            accountBook = accountBookRepository.findByAccountRole_Expenses();
+        } else if (type.equals("e") && keyword.equals("EXPENSES")) {
+            accountBook = accountBookRepository.findByAccountRole(AccountRole.valueOf(keyword));
             //카드 내역 조회
-        } else if (type.equals("cd") && keyword == null) {
-            accountBook = accountBookRepository.findByAccountType_Card();
+        } else if (type.equals("cd") && keyword.equals("CARD")) {
+            accountBook = accountBookRepository.findByAccountType(AccountType.valueOf(keyword));
             //현금 내역 조회
-        } else if (type.equals("ch") && keyword == null) {
-            accountBook = accountBookRepository.findByAccountType_Cash();
+        } else if (type.equals("ch") && keyword.equals("CASH")) {
+            accountBook = accountBookRepository.findByAccountType(AccountType.valueOf(keyword));
             //은행 거래 내역 조회
-        } else if (type.equals("b") && keyword == null) {
-            accountBook = accountBookRepository.findByAccountType_Bank();
+        } else if (type.equals("b") && keyword.equals("BANK")) {
+            accountBook = accountBookRepository.findByAccountType(AccountType.valueOf(keyword));
         } else {
             accountBook = accountBookRepository.findAll();
         }

@@ -196,7 +196,8 @@
             </div>
         </div>
         <div class="search">
-            <form class="d-flex" th:action="@{/account/list}" method="get">
+            <form class="d-flex" th:action="@{/account/list}" method="get"
+                  onsubmit="return submitForm()">
                 <div class="container input-group mb-3 mt-3">
                     <label for="type" class="form-label"></label>
                     <select class="form-select-sm" id="type" name="type">
@@ -211,7 +212,7 @@
                     <label for="keyword" class="form-label"></label>
                     <input type="text" class="form-control" name="keyword"
                            id="keyword" th:value="${param.keyword}"
-                           placeholder=" " />
+                           placeholder=" "/>
                     <button type="submit" class="btn">
                                 <span class="material-symbols-outlined">
                                     search
@@ -244,13 +245,43 @@
                 // type이 'c'일 때만 keyword 입력 가능하도록 설정
                 if (typeSelect.value === 'c') {
                     keywordInput.placeholder = 'Please enter your details :)';
-                    keywordInput.disabled = false;
+                    keywordInput.readOnly = false;
                 } else {
-                    keywordInput.placeholder = '';
-                    keywordInput.disabled = true;
+                    keywordInput.readOnly = true;
                 }
             });
         };
+
+        // 폼 제출 시 실행되는 함수
+        function submitForm() {
+            var typeSelect = document.getElementById("type");
+            var keywordInput = document.getElementById("keyword");
+
+            // 선택된 옵션 값에 따라 keyword 값 설정
+            switch (typeSelect.value) {
+                case "i":
+                    keywordInput.value = "INCOMES";
+                    break;
+                case "e":
+                    keywordInput.value = "EXPENSES";
+                    break;
+                case "cd":
+                    keywordInput.value = "CARD";
+                    break;
+                case "ch":
+                    keywordInput.value = "CASH";
+                    break;
+                case "b":
+                    keywordInput.value = "BANK";
+                    break;
+                default:
+                    keywordInput.value = "";
+                    break;
+            }
+
+            // 폼 제출
+            document.querySelector("form").submit();
+        }
     </script>
 
     <script th:inline="javascript">
