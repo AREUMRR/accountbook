@@ -61,20 +61,21 @@
             <div class="container mt-5 mb-5 p-5 my-5">
                 <div class="container mt-3">
                     <form th:action="@{/account/save}" method="post"
-                          onsubmit="return validateDate()">
+                          onsubmit="return validateForm()">
                         <div class="mb-3 mt-3">
                             <label for="date">거래일</label>
-                            <input type="text" class="form-control" id="date" name="date" required>
+                            <input type="text" class="form-control" id="date" name="date"
+                                   title="날짜 형식에 맞게 입력해주세요." placeholder="yyyy-MM-dd" required>
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="money">금액</label>
-                            <input type="number" class="form-control" id="money" placeholder="money"
-                                   name="money" required>
+                            <input type="number" class="form-control" id="money" placeholder="only numbers"
+                                   name="money" title="숫자만 입력해주세요." required>
                         </div>
                         <div class="mb-3">
                             <label for="content">내용</label>
                             <input type="text" class="form-control" id="content" placeholder="content"
-                                   name="content" required>
+                                   name="content" title="내용을 입력해주세요." required>
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="accountType" class="form-label">거래방식</label>
@@ -110,7 +111,36 @@
             alert(successMessage);
         }
     </script>
-    <script>
+
+    <script th:inline="javascript">
+        function validateForm() {
+            if (validateDate() && validateNumber()) {
+                return true; // 폼 제출
+            } else {
+                return false; // 폼 제출 방지
+            }
+        }
+
+        // keydown 이벤트 사용
+        document.getElementById('money').addEventListener('keydown', function(e) {
+            if (isNaN(parseInt(e.key)) && e.key !== 'Backspace' && e.key !== 'Delete') {
+                e.preventDefault();
+            }
+        });
+
+        // oninput 이벤트 사용
+        document.getElementById('money').oninput = function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        };
+
+        //정규식을 사용하여 숫자만 입력 허용
+        function validateNumber(event) {
+            var key =  event.keyCode || event.which;
+            if (event.keyCode === 8 || event.keyCode === 46 || event.keyCode === 37 || event.keyCode === 39) {
+                return true;
+            } else return !(key < 48 || key > 57);
+        }
+
         //데이터 유형에 따라 날짜 값의 유효성을 검사
         function validateDate() {
             const dateInput = document.getElementById('date');
@@ -118,7 +148,7 @@
 
             const monthRegex = /^\d{4}-\d{2}-\d{2}$/;
             if (!monthRegex.test(dateValue)) {
-                alert('Please enter a valid month in the format "yyyy-MM-dd". Thank you♥');
+                alert('Please enter a valid date in the format "yyyy-MM-dd". Thank you♥');
                 return false;
             }
 
