@@ -20,18 +20,15 @@ public interface AccountBookRepository extends JpaRepository<AccountBookEntity, 
     AccountBookEntity findByAccountIdAndMemberId(@RequestParam(value = "accountId") Long accountId, @RequestParam("memberId") Long memberId);
 
     //거래일에서 조회
-    //@Query("select w from AccountBookEntity w where w.date = :date order by w.date desc limit 1")
     List<AccountBookEntity> findByDateContaining(String date);
 
     //내용에서 조회
     List<AccountBookEntity> findByContentContaining(String keyword);
 
     //지출내역 에서 조회
-    //@Query("select w from AccountBookEntity w where w.accountRole= :keyword order by w.date desc limit 1")
     List<AccountBookEntity> findByAccountRole(AccountRole accountRole);
 
     //은행내역 에서 조회
-    //@Query("select w from AccountBookEntity w where w.accountType= :keyword order by w.date desc limit 1")
     List<AccountBookEntity> findByAccountType(AccountType accountType);
 
 }
