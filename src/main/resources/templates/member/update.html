@@ -74,6 +74,13 @@
                                id="password" th:value="${data.password}">
                     </div>
                     <div class="mb-3">
+                        <label for="password" class="form-label">
+                            비밀번호 확인 :
+                        </label>
+                        <input type="password" class="form-control" name="passwordConfirm"
+                               id="passwordConfirm" th:value="${data.passwordConfirm}">
+                    </div>
+                    <div class="mb-3">
                         <label for="name" class="form-label">
                             회원명 :
                         </label>
