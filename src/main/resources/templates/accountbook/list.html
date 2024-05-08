@@ -324,7 +324,7 @@
     <script th:inline="javascript">
         //게시글 삭제 시 더블 체크
         function confirmDelete(accountId) {
-            if (window.confirm("이 게시글을 정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.")) {
+            if (window.confirm("이 게시글을 정말로 삭제하시겠습니까?")) {
                 // 서버로 삭제 요청 보내기
                 fetch("/account/delete?id=" + accountId, {
                     method: 'DELETE'
