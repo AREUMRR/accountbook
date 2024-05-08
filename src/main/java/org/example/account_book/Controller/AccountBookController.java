@@ -51,7 +51,8 @@ public class AccountBookController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         try {
-            dateFormat.parse(dateString);
+            //dateFormat.parse(dateString);
+            accountBookDTO.setDate(String.valueOf(dateFormat.parse(dateString)));
         } catch (ParseException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "날짜 형식이 올바르지 않습니다. (yyyy-MM-dd)");
             return "redirect:/account/save";
@@ -114,7 +115,8 @@ public class AccountBookController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         try {
-            dateFormat.parse(dateString);
+            //dateFormat.parse(dateString);
+            accountBookDTO.setDate(String.valueOf(dateFormat.parse(dateString)));
         } catch (ParseException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "날짜 형식이 올바르지 않습니다. (yyyy-MM-dd)");
             return "redirect:/account/update";
