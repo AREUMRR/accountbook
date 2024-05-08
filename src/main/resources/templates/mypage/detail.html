@@ -122,11 +122,27 @@
     <script th:inline="javascript">
         //회원 탈퇴 시 더블 체크
         function confirmDelete(memberId) {
-            // 사용자에게 확인 메시지 표시
-            if (window.confirm("정말 탈퇴하시겠습니까?")) {
-                // 사용자가 확인을 누른 경우
+            if (window.confirm("이 계정을 정말로 삭제하시겠습니까?")) {
                 // 서버로 삭제 요청 보내기
-                window.location.href = "/member/delete?id=" + memberId;
+                fetch(`/member/delete?id=${memberId}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // 삭제 성공 시 사용자에게 메시지 표시
+                            alert("계정이 성공적으로 삭제되었습니다.");
+                            // 삭제 후 리디렉션
+                            window.location.href = "/member/list";
+                        } else {
+                            // 삭제 실패 시 사용자에게 메시지 표시
+                            alert("계정 삭제 중 오류가 발생했습니다. 다시 시도해주세요.");
+                        }
+                    })
+                    .catch(error => {
+                        // 네트워크 오류 등 예기치 못한 오류 발생 시 사용자에게 메시지 표시
+                        alert("계정 삭제 중 오류가 발생했습니다. 다시 시도해주세요.");
+                        console.error('Error:', error);
+                    });
             } else {
                 // 사용자가 취소를 누른 경우
                 // 아무 작업도 하지 않음
