@@ -65,7 +65,8 @@
                         <div class="mb-3 mt-3">
                             <label for="date">거래일</label>
                             <input type="text" class="form-control" id="date" name="date"
-                                   title="날짜 형식에 맞게 입력해주세요." th:value="${data.date}">
+                                   title="날짜 형식에 맞게 입력해주세요." th:value="${data.date}"
+                                   pattern="yyyy-MM-dd">
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="money">금액</label>
@@ -113,6 +114,14 @@
     </script>
 
     <script th:inline="javascript">
+        /* 에러가 있을 때 에러메세지 창을 출력 */
+        var errorMessage = /*[[ ${errorMessage} ]]*/ null;
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    </script>
+
+    <script th:inline="javascript">
         function validateForm() {
             if (validateDate() && validateNumber()) {
                 return true; // 폼 제출
@@ -135,7 +144,7 @@
 
         //정규식을 사용하여 숫자만 입력 허용
         function validateNumber(event) {
-            var key =  event.keyCode || event.which;
+            var key = event.keyCode || event.which;
             if (event.keyCode === 8 || event.keyCode === 46 || event.keyCode === 37 || event.keyCode === 39) {
                 return true;
             } else return !(key < 48 || key > 57);

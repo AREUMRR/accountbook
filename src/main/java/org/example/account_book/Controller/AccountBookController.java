@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Controller
@@ -44,6 +49,17 @@ public class AccountBookController {
 
         //로그인한 회원의 정보를 읽어온다
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
+
+        // 날짜 형식 유효성 검사
+        String dateString = accountBookDTO.getDate();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "날짜 형식이 올바르지 않습니다. (yyyy-MM-dd)");
+            return "redirect:/account/save";
+        }
 
         accountBookService.save(accountBookDTO, memberDTO.getMemberId());
 
@@ -89,6 +105,17 @@ public class AccountBookController {
                                 RedirectAttributes redirectAttributes) {
         //로그인한 회원의 정보를 읽어온다
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
+
+        // 날짜 형식 유효성 검사
+        String dateString = accountBookDTO.getDate();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "날짜 형식이 올바르지 않습니다. (yyyy-MM-dd)");
+            return "redirect:/account/update";
+        }
 
         if (memberDTO != null) {
             accountBookService.update(accountBookDTO, memberDTO.getMemberId());

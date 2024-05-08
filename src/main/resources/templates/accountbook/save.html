@@ -64,7 +64,7 @@
                           onsubmit="return validateForm()">
                         <div class="mb-3 mt-3">
                             <label for="date">거래일</label>
-                            <input type="text" class="form-control" id="date" name="date"
+                            <input type="text" class="form-control" id="date" name="date" pattern="yyyy-MM-dd"
                                    title="날짜 형식에 맞게 입력해주세요." placeholder="yyyy-MM-dd" required>
                         </div>
                         <div class="mb-3 mt-3">
@@ -109,6 +109,14 @@
         var successMessage = /*[[ ${successMessage} ]]*/ null;
         if (successMessage) {
             alert(successMessage);
+        }
+    </script>
+
+    <script th:inline="javascript">
+        /* 에러가 있을 때 에러메세지 창을 출력 */
+        var errorMessage = /*[[ ${errorMessage} ]]*/ null;
+        if (errorMessage) {
+            alert(errorMessage);
         }
     </script>
 

@@ -25,6 +25,7 @@ public class MemberDTO {
     @NotBlank
     private String name;
 
+    @NotBlank
     //회원 닉네임
     private String nickName;
 
