@@ -57,7 +57,10 @@ public class AccountBookController {
             return "redirect:/account/save";
         }
 
-        accountBookService.save(accountBookDTO, memberDTO.getMemberId());
+        //인증 된 회원일 때 저장
+        if (memberDTO != null) {
+            accountBookService.save(accountBookDTO, memberDTO.getMemberId());
+        }
 
         redirectAttributes.addFlashAttribute("successMessage",
                 "게시글이 등록되었습니다.");
@@ -117,6 +120,7 @@ public class AccountBookController {
             return "redirect:/account/update";
         }
 
+        //인증 된 회원일 때 수정
         if (memberDTO != null) {
             accountBookService.update(accountBookDTO, memberDTO.getMemberId());
         }

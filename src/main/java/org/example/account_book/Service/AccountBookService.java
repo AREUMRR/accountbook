@@ -13,6 +13,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @Service
@@ -41,8 +44,18 @@ public class AccountBookService {
         //회원 조회
         MemberEntity member = memberRepository.findById(memberId).orElseThrow();
 
+        //날짜 문자열 유효성 검사
+        //날짜 문자열을 LocalDate 객체로 변환
+//        LocalDate date;
+//        try {
+//            date = LocalDate.parse(accountBookDTO.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//        } catch (DateTimeParseException e) {
+//            throw new IllegalArgumentException("Invalid date format. Expected 'yyyy-MM-dd'.", e);
+//        }
+
         AccountBookEntity accountBookEntity = modelMapper.map(accountBookDTO, AccountBookEntity.class);
         accountBookEntity.setMemberEntity(member);
+        //accountBookEntity.setDate(String.valueOf(date));
         accountBookRepository.save(accountBookEntity);
 
     }
