@@ -46,7 +46,7 @@ public class AccountBookController {
         //로그인한 회원의 정보를 읽어온다
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
-        // 날짜 형식 유효성 검사
+        //날짜 형식 유효성 검사
         String dateString = accountBookDTO.getDate();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
@@ -102,7 +102,7 @@ public class AccountBookController {
         //로그인한 회원의 정보를 읽어온다
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
-        // 날짜 형식 유효성 검사
+        //날짜 형식 유효성 검사
         String dateString = accountBookDTO.getDate();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
