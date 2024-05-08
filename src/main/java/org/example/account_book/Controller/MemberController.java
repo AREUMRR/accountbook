@@ -8,8 +8,6 @@ import org.example.account_book.Service.MemberService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -68,7 +66,7 @@ public class MemberController {
         List<MemberDTO> memberDTO1 = memberService.getmemberList();
         //닉네임이 있으면
         if (memberDTO1.get(0).getNickName().equals(memberDTO.getNickName())) {
-            redirectAttributes.addFlashAttribute("error",
+            redirectAttributes.addFlashAttribute("errorMessage",
                     "닉네임이 중복입니다.");
 
             return "redirect:/member/save";

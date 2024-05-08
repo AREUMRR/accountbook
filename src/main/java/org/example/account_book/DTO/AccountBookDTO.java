@@ -1,7 +1,6 @@
 package org.example.account_book.DTO;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +9,6 @@ import org.example.account_book.Constant.AccountRole;
 import org.example.account_book.Constant.AccountType;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -29,7 +27,7 @@ public class AccountBookDTO {
     @NotBlank
     private String content;
 
-    //분류(수입, 지출, 총액)
+    //분류(수입, 지출)
     @NotBlank
     private AccountRole accountRole;
 

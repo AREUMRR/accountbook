@@ -2,7 +2,6 @@ package org.example.account_book.Service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.account_book.Constant.RoleType;
 import org.example.account_book.DTO.MemberDTO;
 import org.example.account_book.Entity.MemberEntity;
 import org.example.account_book.Repository.MemberRepository;

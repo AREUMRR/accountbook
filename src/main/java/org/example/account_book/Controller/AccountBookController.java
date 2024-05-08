@@ -69,6 +69,8 @@ public class AccountBookController {
     }
 
     //수정
+    //로그인 한 경우에만 실행
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/account/update")
     public String updateForm(@RequestParam("id") Long id, Model model,
                              Authentication authentication,
@@ -95,6 +97,8 @@ public class AccountBookController {
         return "accountbook/update";
     }
 
+    //로그인 한 경우에만 실행
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/account/update")
     public String updateProcess(AccountBookDTO accountBookDTO,
                                 Authentication authentication,
@@ -125,6 +129,8 @@ public class AccountBookController {
     }
 
     //삭제
+    //로그인 한 경우에만 실행
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/account/delete")
     public String deleteProcess(Long id, Authentication authentication,
                                 RedirectAttributes redirectAttributes) {

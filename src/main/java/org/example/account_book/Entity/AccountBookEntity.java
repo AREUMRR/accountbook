@@ -1,15 +1,9 @@
 package org.example.account_book.Entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.example.account_book.Constant.AccountRole;
 import org.example.account_book.Constant.AccountType;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -40,7 +34,7 @@ public class AccountBookEntity extends BaseEntity{
     @Column
     private String date;
 
-    //내역 분류(수입, 지출, 총액)
+    //내역 분류(수입, 지출)
     @Enumerated(EnumType.STRING)
     private AccountRole accountRole;
 

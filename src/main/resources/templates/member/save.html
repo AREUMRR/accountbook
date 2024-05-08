@@ -150,6 +150,14 @@
             alert(successMessage);
         }
     </script>
+
+    <script th:inline="javascript">
+        /* 에러가 있을 때 에러메세지 창을 출력 */
+        var errorMessage = /*[[ ${errorMessage} ]]*/ null;
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    </script>
 </th:block>
 </body>
 </html>
