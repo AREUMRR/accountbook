@@ -16,6 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Controller
@@ -47,13 +50,12 @@ public class AccountBookController {
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
         //날짜 형식 유효성 검사
-        String dateString = accountBookDTO.getDate();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
+        //날짜 문자열을 LocalDate 객체로 변환
+        LocalDate date;
         try {
-            //dateFormat.parse(dateString);
-            accountBookDTO.setDate(String.valueOf(dateFormat.parse(dateString)));
-        } catch (ParseException e) {
+            date = LocalDate.parse(accountBookDTO.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            accountBookDTO.setDate(String.valueOf(date));
+        } catch (DateTimeParseException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "날짜 형식이 올바르지 않습니다. (yyyy-MM-dd)");
             return "redirect:/account/save";
         }
@@ -111,15 +113,14 @@ public class AccountBookController {
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
         //날짜 형식 유효성 검사
-        String dateString = accountBookDTO.getDate();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
+        //날짜 문자열을 LocalDate 객체로 변환
+        LocalDate date;
         try {
-            //dateFormat.parse(dateString);
-            accountBookDTO.setDate(String.valueOf(dateFormat.parse(dateString)));
-        } catch (ParseException e) {
+            date = LocalDate.parse(accountBookDTO.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            accountBookDTO.setDate(String.valueOf(date));
+        } catch (DateTimeParseException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "날짜 형식이 올바르지 않습니다. (yyyy-MM-dd)");
-            return "redirect:/account/update";
+            return "redirect:/account/save";
         }
 
         //인증 된 회원일 때 수정
