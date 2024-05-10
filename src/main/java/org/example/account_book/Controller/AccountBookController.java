@@ -33,6 +33,10 @@ public class AccountBookController {
 
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
+        if (memberDTO == null) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("member", memberDTO);
 
         return "accountbook/save";
