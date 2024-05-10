@@ -173,7 +173,7 @@ public class AccountBookController {
         //로그인한 회원의 정보를 읽어온다
         MemberDTO memberDTO = memberService.findByEmail(authentication.getName());
 
-        List<AccountBookDTO> accountBookDTO = accountBookService.getaccountBookList(memberDTO.getMemberId(), type, keyword);
+        List<AccountBookDTO> accountBookDTO = accountBookService.getList(memberDTO.getMemberId(), type, keyword);
 
         //수입 총액
         Long income = accountBookService.income(accountBookDTO);

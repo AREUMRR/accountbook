@@ -53,7 +53,7 @@ public class AccountBookService {
     }
 
     //전체조회
-    public List<AccountBookDTO> getaccountBookList(Long memberId,
+    public List<AccountBookDTO> getList(Long memberId,
                                                    @RequestParam("type") String type,
                                                    @RequestParam("keyword") String keyword) {
         //가계부 조회
