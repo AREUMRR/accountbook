@@ -45,7 +45,7 @@ public class AccountBookController {
     //로그인 한 경우에만 실행
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/account/save")
-    public String saveProcess(AccountBookDTO accountBookDTO, Authentication authentication,
+    public String saveProc(AccountBookDTO accountBookDTO, Authentication authentication,
                               RedirectAttributes redirectAttributes) {
 
         //로그인한 회원의 정보를 읽어온다
@@ -108,7 +108,7 @@ public class AccountBookController {
     //로그인 한 경우에만 실행
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/account/update")
-    public String updateProcess(AccountBookDTO accountBookDTO,
+    public String updateProc(AccountBookDTO accountBookDTO,
                                 Authentication authentication,
                                 RedirectAttributes redirectAttributes) {
         //로그인한 회원의 정보를 읽어온다
@@ -141,7 +141,7 @@ public class AccountBookController {
     //로그인 한 경우에만 실행
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/account/delete")
-    public String deleteProcess(Long id, Authentication authentication,
+    public String deleteProc(Long id, Authentication authentication,
                                 RedirectAttributes redirectAttributes) {
 
         //로그인한 회원의 정보를 읽어온다

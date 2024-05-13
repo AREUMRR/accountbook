@@ -33,7 +33,7 @@ public class MemberController {
     }
 
     @PostMapping("/member/save")
-    public String saveProcess(@Valid MemberDTO memberDTO, BindingResult bindingResult,
+    public String saveProc(@Valid MemberDTO memberDTO, BindingResult bindingResult,
                               RedirectAttributes redirectAttributes) {
 
         //오류가 있으면 회원 가입페이지로 이동
@@ -89,7 +89,7 @@ public class MemberController {
     }
 
     @PostMapping("/member/update")
-    public String updateProcess(MemberDTO memberDTO, RedirectAttributes redirectAttributes) {
+    public String updateProc(MemberDTO memberDTO, RedirectAttributes redirectAttributes) {
         memberService.update(memberDTO);
 
         redirectAttributes.addFlashAttribute("successMassage",
@@ -100,7 +100,7 @@ public class MemberController {
 
     //삭제
     @GetMapping("/member/delete")
-    public String deleteProcess(Long id, RedirectAttributes redirectAttributes) {
+    public String deleteProc(Long id, RedirectAttributes redirectAttributes) {
         memberService.delete(id);
 
         redirectAttributes.addFlashAttribute("successMassage",
